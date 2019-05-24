@@ -118,18 +118,21 @@ suits.forEach(function(s)
 {
 	rank.forEach(function(s1)
 	{
+		var c=0;
 		cards.forEach(function(arg)
 		{
-			if(arg["suit"]==s&&arg["rank"]==s1)
+			if((arg.suit == s)&&(arg.rank == s1))
 			{
 				c=c+1;
 			}
 		})
 		a.push(c)
+		b.push(s+"of"+s1);
+
 	})
 })
-
-console.log(cards[a.indexOf(Math.max(...a))]);
+console.log(b[a.indexOf(Math.max(...a))]+":"+(Math.max(...a)));
+console.log(b)
 
 
 	

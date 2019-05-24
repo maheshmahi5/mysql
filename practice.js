@@ -1,209 +1,396 @@
-// In one of the previous sections, we had an practice problem where you had to
-// reverse a string. Do the same thing with an array, but use the `reduce` and
-// `concat` methods to avoid local variables.
+// Write a function called `containsTwice` that accepts a number and an array,
+// and returns `true` if that number appears in the array twice, and `false`
+// otherwise.
 //
-//      reverse([ 1, 2, 3, 4, 5 ]);
-//      //=> [ 5, 4, 3, 2, 1 ]
+//     containsTwice(5, [1, 2, 3, 4, 5]);
+//     //=> false
 //
-//      reverse([ "hello", "world" ]);
-//      //=> [ "world", "hello" ]
-//
-var reverse = function (arr) {
-	s=arr.reverse();
-	return s;
-};
-console.log(reverse(["hello","world"]))
-
-// Did you know that you could have arrays within arrays? This is perfectly
-// legal JavaScript:
-//
-//     var nestedArray = [ 1, 2, [ 10, 20 ], 3, 4, 5 ];
-//
-//     nestedArray[0];
-//     //=> 1
-//
-//     nestedArray[1];
-//     //=> 2
-//
-//     nestedArray[2];
-//     //=> [ 10, 20 ]
-//
-//     nestedArray[2][0];
-//     //=> 10
-//
-// For this problem, write a function using `reduce` that "flattens" a possibly
-// nested array into a single array.
-//
-//     flatten(nestedArray);
-//     //=> [ 1, 2, 10, 20,  3, 4, 5 ]
-//
-//     flatten([ 1, [2, 3], 4, [5, 6, 7], 8 ]);
-//     //=> [ 1, 2, 3, 4, 5, 6, 7, 8 ]
-//
-// You'll also want to use the `concat` method to make this work.
-//
-var flatten = function (a) {
-	var b=a.reduce(function(b,c){
-		return b+","+c
-	});
-	console.log(b);
-	
-};
-flatten([1,[2,3]]);
-
-// Using `range` and a chain of array methods, write a function that accepts a
-// number `n` and returns the sum of all of the positive multiples of 3 and 5 that
-// are smaller than or equal to `n`.
-//
-//     sumOfMultiplesOf3And5(100);
-//     //=> 2418
-//
-//     sumOfMultiplesOf3And5(50);
-//     //=> 593
-//
-//     sumOfMultiplesOf3And5(0);
-//     //=> 0
-//
-var sumOfMultiplesOf3And5 = function (n) {
-	let numArr=[];
-	for(let i=0;i<=n;i++)
-	{
-		numArr.push(i);
-	}
-	console.log(numArr);
-	
-var tOrF = numArr.reduce(function(total,
-	number){
-	if((number%3==0)||(number%5==0)){
-		total=total+number;
-	}
-	return total;
-});
-console.log(tOrF);
-};
-sumOfMultiplesOf3And5(100);
-
-// Write a function called atLeastOneVowel that accepts a string and
-// returns true if that word contains at least one vowel. Do not use a
-// `for` loop or a `forEach` loop.
-//
-//     atLeastOneVowel("hello");
+//     containsTwice("hello", [ "hello", "world", "hello" ]);
 //     //=> true
 //
-//     atLeastOneVowel("dry");
+//     containsTwice(true, [ true, false, false, true ]);
+//     //=> true
+//
+//     containsTwice(10, [10, 10, 10, 10, 10]);
 //     //=> false
 //
-//     atLeastOneVowel("sdfjkl");
-//     //=> false
-//
-var atLeastOneVowel = function (s) {
-	var a=s.split("")
-	var v=a.some(function(b){
-		return ((b=='a')||(b=='e')||(b=='i')||(b=='o')||(b=='u'))
-	});
-	return v;
-};
-console.log(atLeastOneVowel("zdrfcrfr"))
-// Write a function that accepts a list of tweets, and returns the
-// longest tweet that contains the word `awesome` or the empty string
-// if no tweet contains the word awesome.
-//
-//     logestAwesomeTweet([ "awesome", "longer tweet with awesome", "not awesome", "empty" ]);
-//     //=> "longer tweet with awesome"
-//
-//     longestAwesomeTweet([ "hello", "world" ]);
-//     //=> ""
-//
-var longestAwesomeTweet = function (arr) {
-	var long;
-	var max="awesome".length
-	var s=arr.forEach(function(v){
-		
-		var v=v.toLowerCase()
-		var str=v.indexOf("awesome")
-		if(str != -1)
+var containsTwice = function (num,arr) {
+	var c=0;
+	for(var i=0;i<arr.length;i++)
+	{
+		if(arr[i]==num)
 		{
-			var res=v.length;
-			if(res>max)
-			{
-				long=v;
-				max=res;
-			}
+			c=c+1;
+		}
+	}
+	if(c == 2)
+		{
+			return "true"
+		}
+	else
+	{
+		return "false"
+	}
+	
+};
+console.log(containsTwice(5,[5,2,3,4,5]));
+
+
+// Generalize the previous solution into a function called `containsNTimes` so
+// that it can check for a value an arbitrary number of times.
+//
+//     containsNTimes(3, "hello", [ "hello", "hello", "hello" ]);
+//     //=> true
+//
+//     containsNTimes(5, true, [ true, true, true, true, false ]);
+//     //=> false
+//
+//     containsNTimes(0, 5, [ 1, 2, 3, 4, 5 ]);
+//     //=> false
+//
+var containsNTimes = function (num,num1,arr) {
+	var c =0;
+	for (var i=0;i<arr.length;i++)
+	{
+		if(arr[i]==num1)
+		{
+			c=c+1;
+		}
+	}
+	if(c== num)
+		{
+			return "true";
+		}
+	else
+	{
+		return "false"
+	}
+};
+console.log(containsNTimes(0,5,[1,2,3,4,0]));
+
+
+// Write a function called `atLeastOneEven` that returns `true` if at least one of
+// the numbers in input array is even, false otherwise. It should throw an error if
+// the argument is not an array.
+//
+//     atLeastOneEven([ 3, 5, 6, 7, 9 ]);
+//     //=> true
+//
+//     atLeastOneEven([]);
+//     //=> false
+//
+//     atLeastOneEven([ 101, 203, 401 ]);
+//     //=> false
+//
+//     atLeastOneEven("hello");
+//     //=> input should be an array!
+//
+var atLeastOneEven = function (arr) {
+	for(var i=0;i<arr.length;i++)
+	{
+		if(arr[i] % 2 == 0)
+		{
+			return "true";
+			break;
 		}
 		
-	});
-	return long;
+	}
+	if ((arr[arr.length-1] % 2 !==0) && (typeof(arr)=="object") )
+		{
+			return "false"
+		}
 
+	if(typeof(arr)!="object")
+	{
+		return "input should be an array"
+	}
+	if ( arr==[])
+	{
+		return "false"
+	}
 };
-longestAwesomeTweet(["awesome", "longer tweet with awesome","awesome person esgtrhytrh is always awesome ", "not awesome", "empty" ]);
+console.log(atLeastOneEven(["wedf"]))
 
-// Write a function that accepts an array of HTMLElements and returns an
-// array of their content.
-//
-//     elementsToContent(["<p>this is a paragraph</p>", "<li>list item</li>", "<a>link!</a>" ]);
-//     //=> [ "this is a paragraph", "list item", "link!" ]
-//
-//     elementsToContent([ "<h1>This is an important heading!</h1>", "<h5>this is not as important</h5>" ]);
-//     //=> [ "This is an important heading!", "this is not as important" ]
-//
-var elementsToContent = function(arr) {
 
+// Write a function called `allStrings` that accepts an array as an argument and
+// returns `true` if all of the values in the array are strings. It should
+// return false if they are not all strings, and throw an error if the input is
+// not an array.
+//
+//     allStrings([ "these", "are", "all", "strings" ]); //=> true
+//
+//     allStrings([ "these", "are", "not", 5 ]); //=> false
+//
+//     allStrings([ ]); //=> true
+//
+//     allStrings("hello"); //=> input should be an array!
+//
+// Although the tests will not be checking for this, try to make your loop exit
+// as soon as it finds a non-string entry in the array.
+//
+var allStrings = function (arr) {
+	var c =0;
+	if(typeof(arr)=="object")
+	{
+		for(var i=0;i<arr.length;i++)
+		{
+			if(typeof(arr[i])!="string")
+			{
+				c=c+1;
+			}
+		
+		}
+		if(c == 0)
+		{
+			return "true"
+		}
+		if(c != 0)
+		{
+			return "false"
+		}
+	}
+	else
+	{
+		return "input should be an array!"
+	}
+};
+console.log(allStrings("edsfwef"))
+
+// Write a function that accepts two arrays, and returns true if any of the
+// values in the first array appear twice in the second array. You might want to
+// reuse the function `containsNTimes` or `containsTwice` from above. It should
+// throw an error if either of the inputs are not arrays.
+//
+//
+//     containsAnyTwice([1, 2], ["hello", 1, "world", 1]);
+//     //=> true
+//
+//     containsAnyTwice([], ["always", "will", "return", "false"]);
+//     //=> false
+//
+//     containsAnyTwice(["hello", "world"], ["hello", "hello", "world", "world"]);
+//     //=> true
+//
+//     containsAnyTwice("hello", ["hello", "world"]);
+//     //=> containsAnyTwice expects two arguments, both of which should be an array.
+//
+// Although the tests will not be checking for this, try to make your loop exit
+// as soon as it finds an element in the first array that appears twice in the second
+// array.
+//
+var containsAnyTwice = function (arr1,arr2) {
+	var c=0;
+	if((typeof(arr1)=="object")&&(typeof(arr2)=="object"))
+	{
+		for(var i=0;i<arr1.length;i++)
+		{
+			for( var j=0;j<arr2.length;j++)
+			{
+				if(arr1[i]==arr2[j])
+				{
+					c=c+1;
+				}
+			}
+		
+	
+		if(c==2)
+		{
+			return "true"
+		}
+		else
+		{
+			return "false"
+		}
+	}
+	}
+	else
+	{
+		return "containsAnyTwice expects two arguments, both of which should be an array"
+	}
+};
+console.log(containsAnyTwice(["hello", "world"], ["hello", "hello", "world", "world"]))
+console.log(containsAnyTwice(["hello", "world"], ["hello", "world"]));
+console.log( containsAnyTwice("hello", ["hello", "world"]));
+
+
+// In the previous problem, we determined whether or not an array contains any
+// of a list of values exactly twice. In this problem, we'll actually return
+// those values appearing twice.  Create a new function that returns an array of
+// only the values from the first array that appear twice in the second array.
+//
+// For this problem, you'll create a new array, and you'll use its `push`
+// function to add elements to the end. You'll most likely want to use the
+// `containsTwice` function you created in the previous exercise.
+//
+// The difficulty here will be in avoiding duplicates. You may want to use the
+// `indexOf` method of the resulting array to confirm that you're not adding a
+// value a second time.
+//
+//     getValuesAppearingTwice(["hello", 1, "world", 1]);
+//     //=> [ 1 ]
+//
+//     getValuesAppearingTwice(["always", "will", "return", "empty"]);
+//     //=> []
+//
+//     getValuesAppearingTwice(["hello", "hello", "world", "world", "goodbye"]);
+//     //=> [ "hello", "world" ]
+//
+//     getValuesAppearingTwice(["hello", "world", "goodbye"])
+//     //=> []
+//
+var getValuesAppearingTwice = function (arr) {
+	var c=0;
 	var arr2=[];
-	arr.forEach(function(arr){
-	var a1=arr.indexOf(">");
-	var a2=arr.lastIndexOf("<");
-	var a3=arr.slice(a1+1,a2)
-	arr2.push(a3)
-	});
+	for(i=0;i<arr.length;i++)
+	{
+		for(j=i+1;j<arr.length;j++)
+		{
+			if(arr[i]==arr[j])
+			{
+				arr2.push(arr[i]);
+			}
+		}
+	}
 	return arr2;
 
 };
-console.log(elementsToContent([ "<h1>This is an important heading!</h1>", "<h5>this is not as important</h5>" ]));
+console.log(getValuesAppearingTwice(["hello", 1, "world", 1]));
+console.log(getValuesAppearingTwice(["hello", "hello", "world", "world", "goodbye"]));
 
-// In a previous section, we created a function called `randUpTo` that
-// returned a random integer up to an upper bound. Using that function
-// along with the `range` function, write a method called
-// `randomArray` that accepts two numbers, `length`, and `max`. It
-// should return an array of length `length` that contains random
-// numbers up to the value `max`.
+
+// Using a standard `for` loop, along with the `push` function, write a function
+// called `range` that accepts two numbers, `begin` and `end`, and returns an array
+// that contains all of the integers starting at `begin` and ending at `end`
+// (including `begin` and `end`). For example:
 //
-//     randomArray(10, 100);
-//     //=> [ 56, 32, 4, 92, 73, 75, 11, 10, 26, 4 ]
+//     range(5,10);
+//     //=> [5, 6, 7, 8, 9, 10]
 //
-//     randomArray(5, 10);
-//     //=> [ 2, 0, 3, 9, 10 ]
+//     range(0,3);
+//     //=> [0, 1, 2, 3]
 //
-var randomArray = function (n,n1) {
-	n2=[];
-	for (var i=0;i<n;i++)
+//     range(10,3);
+//     //=> [10, 9, 8, 7, 6, 5, 4, 3]
+//
+// It should throw an error when either of the arguments are not numbers.
+//
+//     range("hello", "world");
+//     //=> arguments to range must be numbers
+//
+var range = function (n1,n2) {
+	var a1=[];
+	if(n1<n2)
 	{
-		var a1=Math.floor(Math.random(n1)*n1);
-			n2.push(a1)
+		for(var i=n1;i<=n2;i++)
+		{
+			a1.push(i);
+		}
+		return  a1;
 	}
-	return n2;
+	if (n1>n2)
+	{
+		for(var i=n1;i>=n2;i--)
+		{
+			a1.push(i);
+		}
+		return a1;
+	}
+};
+console.log(range(5,10));
+console.log(range(10,3));
+
+
+// Using the `isHTMLElement` and `getTagName` function from one of the previous
+// sections, write a function called `mapToTags` that accepts an array of HTML
+// elements and returns a new array that consists of only the tags associated with
+// those HTML elements. It should throw an error if any of the elements are not
+// HTML elements, or if the input is not an array.
+//
+//     mapToTags(["<p>this is a paragraph</p>", "<span>this is a span</span>", "<li>this is a list item</li>"]);
+//     //=> ["p", "span", "li"]
+//
+//     mapToTags([]);
+//     //=> []
+//
+//     mapToTags(["<p>this is a paragraph</p>", "this is a tweet"]);
+//     //=> "this is a tweet" is not an HTML element!
+//
+//     mapToTags(5);
+//     //=> wat?
+//
+//     mapToTags([ "not an html element" ]);
+//     //=> all entries must be html elements!
+//
+var mapToTags = function (arr) {
+	a2=[];
+
+	for(var i=0;i<arr.length;i++)
+	{
+		var b=arr[i].indexOf(">");
+		var a=arr[i].indexOf("<")
+		var c=arr[i].slice(a+1,b);
+		
+		a2.push(c);
+		if(arr[i].charAt(0) != "<")
+		{
+			return "all entries must be html elements!"
+		}
+
+	}
+	return a2;
+};
+console.log(mapToTags(["<p>this is a paragraph</p>", "<span>this is a span</span>", "<li>this is a list item</li>"]));
+console.log(mapToTags([ "not an html element" ]));
+
+
+// Write a function called `filterToLol` which accepts an array of tweets and
+// returns an array that consists only of those that contain `lol` (upper, lower,
+// or mixed-case). It should throw an error if the input is not an array or if any
+// of the elements are not strings.
+//
+//     filterToLol(["hello world!", "this is a tweet lol", "this is a tweet omg"]);
+//     //=> ["this is a tweet lol"]
+//
+//     filterToLol(["lol", "LOL", "LoL", "omg", "lollerskates"]);
+//     //=> ["lol", "LOL", "LoL", "lollerskates"]
+//
+//     filterToLol(["omg", "this is a tweet"]);
+//     //=> []
+//
+//     filterToLol(5);
+//     //=> no can do.
+//
+//     filterToLol(["this is a string", false, 5]);
+//     //=> all entries must be strings!
+//
+var filterToLol = function (arr) {
+	arr2=[];
+	if(typeof(arr)=="object")
+	{
+		for(var i=0;i<arr.length;i++)
+		{
+			if(typeof(arr[i])=="string")
+			{
+				s=arr[i].toLowerCase();
+				if(s.indexOf("lol")!= -1)
+				{
+					arr2.push(arr[i])
+				}
+			}
+			
+		
+		else
+		{
+			return "all entries must be string"
+		}
+	 }
+	}
+	else
+	{
+		return "no can do"
+	}
+	return arr2;
 
 };
-console.log(randomArray(10,100));
-
-// Using the `randomNums` function from above, write a function called
-// `randomElements` that accepts an array, and a number, `n` and
-// returns a new array that consists of `n` random elements selected
-// from the input array. Duplicates are allowed.
-//
-// randomElements([ "red", "orange", "yellow", "green", "blue", "purple", "gray", "black", "white" ], 5);
-// //=> [ "green", "green", "blue", "orange", "black" ]
-//
-// randomElements([ "clubs", "diamonds", "hearts", "spades" ], 3);
-// //=> [ "hearts", "diamonds", "hearts" ]
-//
-	var randomElements = function (n,n1) {
-	n2=[]
-	for(var i=0;i<n1;i++)
-	{
-		n2.push(n[Math.floor(Math.random(n.length)*n.length)]);
-		
-		
-	}
-	return n2;
-};
-console.log(randomElements([ "clubs", "diamonds", "hearts", "spades" ], 3));
+console.log(filterToLol(["hello world!", "this is a tweet lol", "this is a tweet omg"]));
+console.log(filterToLol(["lol", "LOL", "LoL", "omg", "lollerskates"]));
